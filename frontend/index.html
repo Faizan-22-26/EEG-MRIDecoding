@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neuro EEG-MRI Tool</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+        <img src="https://dummyimage.com/120x40/004d99/ffffff&text=NeuroScan" alt="NeuroScan Logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#eeg-data">EEG Data</a></li>
+            <li><a href="#mri-analysis">MRI Analysis</a></li>
+            <li><a href="#reports">Reports</a></li>
+        </ul>
+    </nav>
+</header>
+
+  <!-- Hero / Banner -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Neuro EEG-MRI Tool</h1>
+            <p>Advanced Non-Invasive Brain Analysis</p>
+        </div>
+    </section>
+
+  <!-- Main Container -->
+  <main class="container">
+    <!-- Left Panel: EEG Upload & Info -->
+    <section class="left-panel">
+      <h2>Upload & Configure EEG</h2>
+      <div class="upload-section">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" placeholder="e.g. John Doe" />
+
+        <label for="patientAge">Age:</label>
+        <input type="number" id="patientAge" placeholder="e.g. 31" />
+
+        <label for="patientGender">Gender:</label>
+        <select id="patientGender">
+          <option value="" disabled selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="diagnosis">Diagnosis/Prelim:</label>
+        <input type="text" id="diagnosis" placeholder="e.g. Epilepsy" />
+
+        <label for="eegFile">Upload EEG File:</label>
+        <input type="file" id="eegFile" accept=".txt,.csv,.edf"/>
+
+        <label for="eegName">EEG Sample Name:</label>
+        <input type="text" id="eegName" placeholder="e.g. Patient001_EEG" />
+
+        <button id="uploadBtn">Upload Sample</button>
+      </div>
+
+      <div class="sample-info hidden" id="sampleInfo">
+        <h3>EEG Summary</h3>
+        <div class="info-grid">
+          <div><strong>Patient:</strong> <span id="samplePatient"></span></div>
+          <div><strong>Age:</strong> <span id="sampleAge"></span></div>
+          <div><strong>Gender:</strong> <span id="sampleGender"></span></div>
+          <div><strong>Diagnosis:</strong> <span id="sampleDiagnosis"></span></div>
+          <div><strong>File Name:</strong> <span id="sampleFileName"></span></div>
+          <div><strong>Sample Name:</strong> <span id="sampleNameDisplay"></span></div>
+        </div>
+
+        <h4>EEG Data Channels</h4>
+        <table class="eeg-table">
+          <thead>
+            <tr>
+              <th>Channel</th>
+              <th>Band</th>
+              <th>Peak (μV)</th>
+              <th>Mean (μV)</th>
+              <th>Std Dev</th>
+            </tr>
+          </thead>
+          <tbody id="eegTableBody">
+            <!-- Filled by script with mock data -->
+          </tbody>
+        </table>
+
+        <div class="eeg-visual">
+          <h4>EEG Visualization</h4>
+          <!-- Sample EEG wave image credited to Unsplash (Robina Weermeijer) -->
+          <img 
+            src="https://www.researchgate.net/publication/331401347/figure/fig1/AS:731261270237184@1551357681016/Example-of-EEG-recording-for-10-channels-during-perception-of-visual-stimuli-green.png" 
+            alt="Sample EEG Wave"
+          />
+        </div>
+
+        <button id="processMRI">Process MRI</button>
+      </div>
+    </section>
+
+    <!-- Right Panel: MRI Results -->
+    <section class="right-panel">
+      <h2>MRI Visualization</h2>
+      <div id="mriSection" class="hidden">
+        <div class="mri-stats">
+          <p><strong>Resolution:</strong> <span id="resolutionVal">--</span></p>
+          <p><strong>Timeslice:</strong> <span id="timesliceVal">--</span></p>
+          <p><strong>Slice Index:</strong> <span id="sliceIndexVal">--</span></p>
+        </div>
+        <div class="mri-previews">
+          <div class="mri-slice" id="axialSlice">
+            <!-- Axial slice image credited to Unsplash (National Cancer Institute) -->
+            <img
+              src="https://mrimaster.com/wp-content/uploads/2023/08/slice-thickness-5mm-1.jpg"
+              alt="Axial Slice"
+            />
+            <p>Axial</p>
+          </div>
+          <div class="mri-slice" id="sagittalSlice">
+            <!-- Sagittal slice image credited to Unsplash (National Cancer Institute) -->
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/c/c5/MRI_brain_sagittal_section.jpg?20131018125821"
+              alt="Sagittal Slice"
+            />
+            <p>Sagittal</p>
+          </div>
+          <div class="mri-slice" id="coronalSlice">
+            <!-- Coronal slice image credited to Unsplash (National Cancer Institute) -->
+            <img
+              src="https://www.rcemlearning.co.uk/wp-content/uploads/modules/principles-of-mri-of-the-brain-and-spine/Screen-Shot-2017-10-30-at-17.38.10.png"
+              alt="Coronal Slice"
+            />
+            <p>Coronal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for Enlarged Slice -->
+  <div id="sliceModal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal">&times;</span>
+      <img src="" alt="Enlarged MRI Slice" id="modalImage" />
+      <p id="modalSliceName"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; Algo Sappers 6.0</p>
+  </footer>
+</body>
+</html>
