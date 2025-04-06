@@ -1,0 +1,11 @@
+name: eeg-neuroimaging
+dependencies:
+  - python=3.9
+  - tensorflow
+  - fastapi
+  - uvicorn
+  - numpy
+  - scipy
+  - pip
+  - pip:
+    - python-multipart
